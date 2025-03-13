@@ -20,9 +20,9 @@ if (-not (Get-Command azcopy -ErrorAction SilentlyContinue)) {
     $AzCopyExePath = (Get-ChildItem -Path $AzCopyPath -Recurse -Filter azcopy.exe).FullName
     $env:PATH += ";$(Split-Path $AzCopyExePath)"
 
-    Write-Host "AzCopy zostało pomyślnie zainstalowane."
+    Write-Host "AzCopy zostało pomyslnie zainstalowane."
 } else {
-    Write-Host "AzCopy jest już zainstalowane."
+    Write-Host "AzCopy jest juz zainstalowane."
 }
 
 # 3. Funkcja do kopiowania danych z dysku
@@ -43,11 +43,11 @@ $AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationPath/$DriveLetter$Sa
     Invoke-Expression $AzCopyCommand
     
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "Synchronizacja z dysku $DriveLetter zakończona pomyślnie!" -ForegroundColor Green
-        return "Synchronizacja z dysku $DriveLetter zakończona pomyślnie."
+        Write-Host "Synchronizacja z dysku $DriveLetter zakonczona pomyslnie!" -ForegroundColor Green
+        return "Synchronizacja z dysku $DriveLetter zakonczona pomyslnie."
     } else {
-        Write-Host "Wystąpił błąd podczas synchronizacji z dysku $DriveLetter. Kod błędu: $LASTEXITCODE" -ForegroundColor Red
-        return "Wystąpił błąd podczas synchronizacji z dysku $DriveLetter. Kod błędu: $LASTEXITCODE"
+        Write-Host "Wystapil blad podczas synchronizacji z dysku $DriveLetter. Kod bledu: $LASTEXITCODE" -ForegroundColor Red
+        return "Wystapil blad podczas synchronizacji z dysku $DriveLetter. Kod bledu: $LASTEXITCODE"
     }
 }
 
@@ -64,7 +64,7 @@ foreach ($drive in $localDrives) {
 # 5. Logowanie wyniku (do pliku tekstowego i do bloba)
 # ---------------------------------
 $LogFile = "$env:TEMP\BackupLog_$UserName.txt"
-$LogMessage = "$(Get-Date): Synchronizacja danych użytkownika '$UserName' zakończona."
+$LogMessage = "$(Get-Date): Synchronizacja danych uzytkownika '$UserName' zakonczona."
 $LogMessage += $logContent -join "`n"
 
 # Zapisywanie logu lokalnie
@@ -81,9 +81,9 @@ $LogBlobUrl = "$DestinationPath/$LogBlobName$SasToken"
 azcopy copy $TempLogFile $LogBlobUrl
 
 if ($LASTEXITCODE -eq 0) {
-    Write-Host "Log został pomyślnie zapisany do Azure Blob Storage." -ForegroundColor Green
+    Write-Host "Log zostal pomyslnie zapisany do Azure Blob Storage." -ForegroundColor Green
 } else {
-    Write-Host "Wystąpił błąd podczas zapisywania logu do Azure Blob Storage. Kod błędu: $LASTEXITCODE" -ForegroundColor Red
+    Write-Host "Wystapił blad podczas zapisywania logu do Azure Blob Storage. Kod bledu: $LASTEXITCODE" -ForegroundColor Red
 }
 
 # Usuwanie tymczasowego pliku logu
