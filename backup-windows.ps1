@@ -64,7 +64,7 @@ foreach ($drive in $localDrives) {
 # 5. Logowanie wyniku (do pliku tekstowego i do bloba)
 # ---------------------------------
 $LogFile = "$env:TEMP\BackupLog_$UserName.txt"
-$LogMessage = "$(Get-Date): Synchronizacja danych użytkownika '$UserName' zakończona.`n"
+$LogMessage = "$(Get-Date): Synchronizacja danych użytkownika '$UserName' zakończona."
 $LogMessage += $logContent -join "`n"
 
 # Zapisywanie logu lokalnie
