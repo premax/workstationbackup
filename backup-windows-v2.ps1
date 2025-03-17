@@ -2,7 +2,7 @@
 # ---------------------------------
 $StorageAccountName = "hemolensbackup"      # Nazwa konta magazynu Azure
 $ContainerName = "backup"            # Nazwa kontenera w Azure Blob Storage
-$SasToken = $env:SASTOKEN
+$SasToken = "$env:SASTOKEN"
 $ComputerName = $env:COMPUTERNAME
 $UserName = $env:USERNAME                      # Pobranie nazwy aktualnie zalogowanego użytkownika
 $DestinationPath = "https://$StorageAccountName.blob.core.windows.net/$ContainerName/$ComputerName/$UserName"
@@ -33,9 +33,11 @@ function Copy-DiskData {
     )
     
     $sourcePath = "${DriveLetter}:\"
-    
 
-$AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationPath/$DriveLetter$SasToken`" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
+$DestinationUrl = "$DestinationPath" + "/" + "$DriveLetter" + "$SasToken"
+
+#$AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationPath/$DriveLetter`" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
+$AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationUrl`" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
 
 
     Write-Host "Synchronizacja danych z dysku $DriveLetter..."
