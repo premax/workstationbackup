@@ -39,7 +39,6 @@ $DestinationUrl = "$DestinationPath" + "/" + "$DriveLetter" + "$SasToken"
 #$AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationPath/$DriveLetter`" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
 $AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationUrl`" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
 
-
     Write-Host "Synchronizacja danych z dysku $DriveLetter..."
     Write-Host "Wykonywane polecenie: $AzCopyCommand"
     Invoke-Expression $AzCopyCommand
@@ -49,7 +48,8 @@ $AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationUrl`" --recursive=tr
         return "Synchronizacja z dysku $DriveLetter zakonczona pomyslnie."
     } else {
         Write-Host "Wystapil blad podczas synchronizacji z dysku $DriveLetter. Kod bledu: $LASTEXITCODE" -ForegroundColor Red
-        return "Wystapil blad podczas synchronizacji z dysku $DriveLetter. Kod bledu: $LASTEXITCODE"
+#        return "Wystapil blad podczas synchronizacji z dysku $DriveLetter. Kod bledu: $LASTEXITCODE"
+         return "Wystapil blad podczas synchronizacji z dysku $DriveLetter. Kod bledu: $LASTEXITCODE. Uzylem polecenia: $AzCopyCommand"
     }
 }
 
@@ -66,7 +66,8 @@ foreach ($drive in $localDrives) {
 # 5. Logowanie wyniku (do pliku tekstowego i do bloba)
 # ---------------------------------
 $LogFile = "$env:TEMP\BackupLog_$UserName.txt"
-$LogMessage = "$(Get-Date): Synchronizacja danych uzytkownika '$UserName' zakonczona."
+#$LogMessage = "$(Get-Date): Synchronizacja danych uzytkownika '$UserName' zakonczona."
+$LogMessage = "$(Get-Date): Synchronizacja danych uzytkownika '$UserName' zakonczona. Uzyty token: $SasToken"
 $LogMessage += $logContent -join "`n"
 
 # Zapisywanie logu lokalnie
