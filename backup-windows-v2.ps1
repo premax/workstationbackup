@@ -38,7 +38,7 @@ function Copy-DiskData {
 
 #$AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationPath/$DriveLetter`" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
 #$AzCopyCommand = "azcopy sync `"$sourcePath`" `"$DestinationUrl`" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
-$AzCopyCommand = "azcopy sync `"$sourcePath`" "https://hemolensbackup.blob.core.windows.net/$ContainerName/$ComputerName/$DriveLetter?$SasToken" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
+$AzCopyCommand = "azcopy sync `"$sourcePath`" `"https://hemolensbackup.blob.core.windows.net/$ContainerName/$ComputerName/$DriveLetter?$SasToken`" --recursive=true --exclude-path `"Windows;Program Files;Program Files (x86);ProgramData;Users\*\AppData\Local\Temp;$Recycle.Bin;System Volume Information;PerfLogs`" --exclude-pattern `"pagefile.sys;swapfile.sys;hiberfil.sys;*.tmp;*.temp;*.log`""
 
 
     Write-Host "Synchronizacja danych z dysku $DriveLetter..."
