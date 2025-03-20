@@ -2,7 +2,7 @@
 # ---------------------------------
 $StorageAccountName = "hemolensbackup"      # Nazwa konta magazynu Azure
 $ContainerName = "backup"            # Nazwa kontenera w Azure Blob Storage
-$SasToken = "$env:SASTOKEN"
+$SasToken = "$env:SASTOKEN"+"%2FSTJipbSghb5DqN4S56C20XtB1oE%3D"
 $ComputerName = $env:COMPUTERNAME
 $UserName = $env:USERNAME                      # Pobranie nazwy aktualnie zalogowanego użytkownika
 #$DestinationPath = "https://$StorageAccountName.blob.core.windows.net/$ContainerName/$ComputerName/$UserName"
